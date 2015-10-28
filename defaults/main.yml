@@ -3,6 +3,9 @@
 gitlab_external_url: "https://gitlab/"
 gitlab_git_data_dir: "/var/opt/gitlab/git-data"
 
+# Allow SSH if hostname is not the same
+gitlab_setup_host_domain: false # gitlab.example.me
+
 # SSL Configuration.
 gitlab_redirect_http_to_https: "true"
 gitlab_ssl_certificate: "/etc/gitlab/ssl/gitlab.crt"
@@ -24,3 +27,4 @@ gitlab_ldap_base: "DC=example,DC=com"
 
 # Probably best to leave this as the default, unless doing testing.
 gitlab_restart_handler_failed_when: 'gitlab_restart.rc != 0'
+

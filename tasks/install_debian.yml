@@ -1,0 +1,17 @@
+---
+
+# Install GitLab and its dependencies (Debian).
+- name: Install GitLab dependencies (Debian).
+  apt: "name={{ item }} state=installed"
+  with_items: gitlab_dependencies
+
+- name: Download GitLab repository installation script (Debian).
+  get_url:
+    url: "{{ gitlab_repository_installation_script_url }}"
+    dest: /tmp/gitlab_install_repository.sh
+
+- name: Install GitLab repository
+  command: bash /tmp/gitlab_install_repository.sh
+
+- name: Install GitLab
+  apt: "name=gitlab-ce state=installed"
