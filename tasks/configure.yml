@@ -30,9 +30,17 @@
 
 - name: Create self-signed certificate.
   command: >
-    openssl req -new -nodes -x509 -subj "{{ gitlab_self_signed_cert_subj }}" -days 3650 -keyout {{ gitlab_ssl_certificate_key }} -out {{ gitlab_ssl_certificate }} -extensions v3_ca
-    creates={{ gitlab_ssl_certificate }}
+    openssl req -new -nodes -x509 -subj "{{ item.self_signed_cert_subj }}" -days 3650 -keyout {{ item.ssl_certificate_key }} -out {{ item.ssl_certificate }} -extensions v3_ca
+    creates={{ item.ssl_certificate }}
   when: gitlab_create_self_signed_cert
+  with_items:
+    - self_signed_cert_subj: "{{ gitlab_self_signed_cert_subj }}"
+      ssl_certificate_key: "{{ gitlab_ssl_certificate_key }}"
+      ssl_certificate: "{{ gitlab_ssl_certificate }}"
+    - self_signed_cert_subj: "{{  gitlab_ci_self_signed_cert_subj }}"
+      ssl_certificate_key: "{{ gitlab_ci_ssl_certificate_key }}"
+      ssl_certificate: "{{ gitlab_ci_ssl_certificate }}"
+
 
 - name: Copy GitLab configuration file.
   template:
@@ -43,5 +51,3 @@
     mode: 0600
   notify: restart gitlab
 
-- name: Ensure database is updated
-  command: gitlab-rake db:migrate

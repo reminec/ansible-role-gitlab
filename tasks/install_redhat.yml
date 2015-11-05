@@ -13,6 +13,7 @@
 
 - name: Install GitLab repository (RedHat)
   command: bash /tmp/gitlab_install_repository.sh
+  notify: migrate database
 
 - name: Install GitLab (RedHat)
   yum: "name=gitlab-ce state=installed"

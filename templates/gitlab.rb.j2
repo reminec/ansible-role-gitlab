@@ -1,6 +1,13 @@
 # The URL through which GitLab will be accessed.
 external_url "{{ gitlab_external_url }}"
 
+{% if gitlab_ci_external_url %}
+ci_external_url "{{ gitlab_ci_external_url }}"
+ci_nginx['redirect_http_to_https'] = {{ gitlab_redirect_http_to_https }}
+ci_nginx['ssl_certificate'] = "{{ gitlab_ci_ssl_certificate }}"
+ci_nginx['ssl_certificate_key'] = "{{ gitlab_ci_ssl_certificate_key }}"
+{% endif %}
+
 # Whether to redirect http to https.
 nginx['redirect_http_to_https'] = {{ gitlab_redirect_http_to_https }}
 nginx['ssl_certificate'] = "{{ gitlab_ssl_certificate }}"
