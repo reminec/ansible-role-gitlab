@@ -6,3 +6,9 @@
 
 - name: migrate database
   command: gitlab-rake db:migrate
+
+- name: update ca-store
+  command: update-ca-certificates
+
+- name: restart nginx
+  command: gitlab-ctl restart nginx

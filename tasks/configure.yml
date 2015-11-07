@@ -32,6 +32,7 @@
   command: >
     openssl req -new -nodes -x509 -subj "{{ item.self_signed_cert_subj }}" -days 3650 -keyout {{ item.ssl_certificate_key }} -out {{ item.ssl_certificate }} -extensions v3_ca
     creates={{ item.ssl_certificate }}
+  register: certs
   when: gitlab_create_self_signed_cert
   with_items:
     - self_signed_cert_subj: "{{ gitlab_self_signed_cert_subj }}"
@@ -40,7 +41,27 @@
     - self_signed_cert_subj: "{{  gitlab_ci_self_signed_cert_subj }}"
       ssl_certificate_key: "{{ gitlab_ci_ssl_certificate_key }}"
       ssl_certificate: "{{ gitlab_ci_ssl_certificate }}"
+    - self_signed_cert_subj: "{{  gitlab_mattermost_self_signed_cert_subj }}"
+      ssl_certificate_key: "{{ gitlab_mattermost_ssl_certificate_key }}"
+      ssl_certificate: "{{ gitlab_mattermost_ssl_certificate }}"
+  notify:
+    - restart gitlab
+    - update ca-store
+    - restart nginx
 
+- name: Copy certificate to linux ca certificates folder
+  command: cp {{ item.item.ssl_certificate }} {{ gitlab_linux_ca_certificates_dir }}/
+  when: item | changed
+  with_items: certs.results
+
+- name: Configure ca-certificates tools
+  lineinfile: >
+    dest="{{ gitlab_linux_ca_certificates_conf }}"
+    regexp="^{{ item.item.ssl_certificate | basename }}"
+    line="{{ item.item.ssl_certificate | basename}}"
+    state=present
+  when: item | changed
+  with_items: certs.results
 
 - name: Copy GitLab configuration file.
   template:

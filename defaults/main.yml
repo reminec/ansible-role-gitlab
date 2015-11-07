@@ -1,28 +1,38 @@
 ---
 # General config.
 gitlab_external_url: "https://gitlab/"
-
 gitlab_ci_external_url: '' # Setup gitlab_ci_external_url for enable CI
+gitlab_mattermost_external_url: '' # Setup gitlab_mattermost_external_url for enable mattermost
+
 
 gitlab_git_data_dir: "/var/opt/gitlab/git-data"
 
 # Allow SSH if hostname is not the same
 gitlab_setup_host_domain: false # gitlab.example.me
 
+#########
 # SSL Configuration.
+#########
+# Gitlab
 gitlab_redirect_http_to_https: "true"
 gitlab_ssl_certificate: "/etc/gitlab/ssl/gitlab.crt"
 gitlab_ssl_certificate_key: "/etc/gitlab/ssl/gitlab.key"
 
-
+# Gitlab-ci
 gitlab_ci_redirect_http_to_https: "true"
 gitlab_ci_ssl_certificate: "/etc/gitlab/ssl/gitlab_ci.crt"
 gitlab_ci_ssl_certificate_key: "/etc/gitlab/ssl/gitlab_ci.key"
 
+# Mattermost
+gitlab_mattermost_redirect_http_to_https: "true"
+gitlab_mattermost_ssl_certificate: "/etc/gitlab/ssl/mattermost.crt"
+gitlab_mattermost_ssl_certificate_key: "/etc/gitlab/ssl/mattermost.key"
+
 # SSL Self-signed Certificate Configuration.
 gitlab_create_self_signed_cert: true
-gitlab_self_signed_cert_subj: "/C=US/ST=Missouri/L=Saint Louis/O=IT/CN=gitlab"
-gitlab_ci_self_signed_cert_subj: "/C=US/ST=Missouri/L=Saint Louis/O=IT/CN=gitlab-ci"
+gitlab_self_signed_cert_subj: "/C=US/ST=Missouri/L=Saint Louis/O=IT/CN=gitlab.example.com"
+gitlab_ci_self_signed_cert_subj: "/C=US/ST=Missouri/L=Saint Louis/O=IT/CN=gitlab-ci.example.com"
+gitlab_mattermost_self_signed_cert_subj: "/C=US/ST=Missouri/L=Saint Louis/O=IT/CN=mattermost.example.com"
 
 # LDAP Configuration.
 gitlab_ldap_enabled: "false"
@@ -37,3 +47,5 @@ gitlab_ldap_base: "DC=example,DC=com"
 # Probably best to leave this as the default, unless doing testing.
 gitlab_restart_handler_failed_when: 'gitlab_restart.rc != 0'
 
+gitlab_linux_ca_certificates_dir: /usr/share/ca-certificates
+gitlab_linux_ca_certificates_conf: /etc/ca-certificates.conf
