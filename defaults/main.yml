@@ -1,7 +1,7 @@
 ---
 # General config.
 gitlab_external_url: "https://gitlab/"
-gitlab_ci_external_url: '' # Setup gitlab_ci_external_url for enable CI
+
 gitlab_mattermost_external_url: '' # Setup gitlab_mattermost_external_url for enable mattermost
 
 
@@ -18,11 +18,6 @@ gitlab_redirect_http_to_https: "true"
 gitlab_ssl_certificate: "/etc/gitlab/ssl/gitlab.crt"
 gitlab_ssl_certificate_key: "/etc/gitlab/ssl/gitlab.key"
 
-# Gitlab-ci
-gitlab_ci_redirect_http_to_https: "true"
-gitlab_ci_ssl_certificate: "/etc/gitlab/ssl/gitlab_ci.crt"
-gitlab_ci_ssl_certificate_key: "/etc/gitlab/ssl/gitlab_ci.key"
-
 # Mattermost
 gitlab_mattermost_redirect_http_to_https: "true"
 gitlab_mattermost_ssl_certificate: "/etc/gitlab/ssl/mattermost.crt"
@@ -31,7 +26,6 @@ gitlab_mattermost_ssl_certificate_key: "/etc/gitlab/ssl/mattermost.key"
 # SSL Self-signed Certificate Configuration.
 gitlab_create_self_signed_cert: true
 gitlab_self_signed_cert_subj: "/C=US/ST=Missouri/L=Saint Louis/O=IT/CN=gitlab.example.com"
-gitlab_ci_self_signed_cert_subj: "/C=US/ST=Missouri/L=Saint Louis/O=IT/CN=gitlab-ci.example.com"
 gitlab_mattermost_self_signed_cert_subj: "/C=US/ST=Missouri/L=Saint Louis/O=IT/CN=mattermost.example.com"
 
 # LDAP Configuration.

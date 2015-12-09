@@ -38,9 +38,6 @@
     - self_signed_cert_subj: "{{ gitlab_self_signed_cert_subj }}"
       ssl_certificate_key: "{{ gitlab_ssl_certificate_key }}"
       ssl_certificate: "{{ gitlab_ssl_certificate }}"
-    - self_signed_cert_subj: "{{  gitlab_ci_self_signed_cert_subj }}"
-      ssl_certificate_key: "{{ gitlab_ci_ssl_certificate_key }}"
-      ssl_certificate: "{{ gitlab_ci_ssl_certificate }}"
     - self_signed_cert_subj: "{{  gitlab_mattermost_self_signed_cert_subj }}"
       ssl_certificate_key: "{{ gitlab_mattermost_ssl_certificate_key }}"
       ssl_certificate: "{{ gitlab_mattermost_ssl_certificate }}"
@@ -72,3 +69,10 @@
     mode: 0600
   notify: restart gitlab
 
+- name: Ensure backups dir exist
+  file: >
+    state=directory
+    path=/var/opt/gitlab/backups
+    mode='u=rwx,g=,o='
+    owner=git
+    group=root
