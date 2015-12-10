@@ -6,6 +6,7 @@
 
 - name: migrate database
   command: gitlab-rake db:migrate
+  when: gitlab_restart_handler_failed_when
 
 - name: update ca-store
   command: update-ca-certificates
